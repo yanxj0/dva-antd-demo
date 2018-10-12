@@ -1,12 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import dva from 'dva';
+import createLoading from 'dva-loading';
+import { createHashHistory } from 'history';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import router from './router';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// 1. Initialize
+const app = dva({
+    ...createLoading({
+        effects: true,
+    }),
+    history: createHashHistory(),
+    onError () {
+
+    }
+})
+
+app.use(createLoading())
+
+// 2. Model
+// app.model()
+
+// 3. Router
+app.router(router)
+
+
+// 4. Start
+app.start('#root')
