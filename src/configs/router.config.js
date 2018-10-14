@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, routerRedux, Redirect, Switch, NotFoundRoute } from 'dva/router'
+import { Route, routerRedux, Redirect, Switch } from 'dva/router'
 
 import * as base from '@routes/base'
 
