@@ -1,8 +1,8 @@
 
-const path = '/mock'
+const path = 'mock'
 
 // region
-// const base = require('./apis/base') // 基础的接口
+const base = require('./apis/base') // 基础的接口
 // const userManage = require('./apis/sys/userManage') // 用户管理
 // const roleManage = require('./apis/sys/roleManage') // 角色管理
 // const moduleManage = require('./apis/sys/moduleManage') // 模块管理
@@ -12,7 +12,7 @@ module.exports = {
   // region 收起所有
 
   // region 公用
-  // [`${path}/usercenter/login`]: base.login, // 登录
+  [`${path}/usercenter/login`]: base.login, // 登录
   // [`${path}/usercenter/user/userMenu`]: base.menu, // 菜单
   // [`${path}/usercenter/user/userInfo`]: base.staff, // 用户信息
   // [`${path}/usercenter/logout`]: base.logout, // 退出

@@ -19,7 +19,7 @@ const app = dva({
 app.use(createLoading())
 
 // 2. Model
-// app.model()
+app.model(require('./models/login').default)
 
 // 3. Router
 app.router(router)

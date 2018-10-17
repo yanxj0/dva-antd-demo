@@ -1,26 +1,38 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
 import { Form, Icon, Input, Button, Checkbox } from "antd";
+import { connect } from 'dva';
 
 import "@style/login.less";
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends Component {
-  handleSubmit = e => {
+const Login = ({
+    login,
+    dispatch,
+    form:{
+      getFieldDecorator,
+      validateFieldsAndScroll,
+      validateFields,
+    }
+  }) => {
+  function handleSubmit (e) {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        // console.log("Received values of form: ", values);
+        dispatch({
+            type: 'login/checkLogin',
+            data: values,
+          });
       }
     });
   };
 
-  render() {
-    const { getFieldDecorator } = this.props.form;
     return (
       <div className="login-container">
         <div className="form-container">
-          <Form onSubmit={this.handleSubmit} className="login-form">
+          <Form onSubmit={handleSubmit} className="login-form">
             <FormItem>
               {getFieldDecorator("userName", {
                 rules: [
@@ -70,7 +82,14 @@ class NormalLoginForm extends Component {
         </div>
       </div>
     );
-  }
 }
 
-export default Form.create()(NormalLoginForm);
+Login.propTypes = {
+    form: PropTypes.object,
+    app: PropTypes.object,
+    dispatch: PropTypes.func,
+  }
+
+export default connect(({ login }) => ({
+    login,
+  }))(Form.create()(Login));

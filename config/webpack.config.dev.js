@@ -153,7 +153,8 @@ module.exports = {
       '@models': path.join(__dirname, '../src/models'),
       '@services': path.join(__dirname, '../src/services'),
       '@style': path.join(__dirname, '../src/style'),
-      '@configs': path.join(__dirname, '../src/configs')
+      '@configs': path.join(__dirname, '../src/configs'),
+      '@ajax': path.join(__dirname, '../src/configs/ajax.js')
     },
     plugins: [
       // Adds support for installing with Plug'n'Play, leading to faster installs and adding

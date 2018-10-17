@@ -1,7 +1,7 @@
 
 import axios from 'axios'
-import { hashHistory } from 'react-router'
-import { timeout, baseURL } from '@config'
+import { createHashHistory } from 'history';
+import { timeout, baseURL } from '@configs/config'
 import { message } from 'antd'
 import { parseQueryString } from './common'
 
@@ -177,7 +177,7 @@ export const oftenFetchByPost = (api, options) => {
               failure(response)
             }
             message.warning(response.msg)
-            hashHistory.replace('/login')
+            createHashHistory.replace('/login')
             break
           }
           default: {

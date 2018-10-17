@@ -40,6 +40,7 @@
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "0.4.3",
     "mock": "^0.1.1",
+    "mockjs": "^1.0.1-beta3",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -54,6 +55,7 @@
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
+    "supervisor": "^0.12.0",
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
@@ -64,7 +66,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "mock": "supervisor -w mock ./src/mocks/http.js"
   },
   "eslintConfig": {
     "extends": "react-app"
