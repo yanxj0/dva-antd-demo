@@ -1,4 +1,3 @@
-
 import { createApi } from '@ajax'
 import { mockURL, baseURL, path } from '@configs/config'
 

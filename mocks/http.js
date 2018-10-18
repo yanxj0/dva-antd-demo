@@ -23,13 +23,13 @@ http.createServer((req, res) => {
       const originData = _map[req.url]
         ? Mock.mock(_map[req.url])
         : ''
-      const data = typeof (_filter[req.url]) === 'function'
-        ? _filter[req.url](originData, postData)
-        : originData
+      // const data = typeof (_filter[req.url]) === 'function'
+      //   ? _filter[req.url](originData, postData)
+      //   : originData
       // const data = originData
       setTimeout(() => {
-        console.log(data)
-        res.end(JSON.stringify(data))
+        console.log(originData)
+        res.end(JSON.stringify(originData))
       }, parseInt(((Math.random() - 0.5) + 1) * 500), 10) // 0-2s的随机数
     })
   }

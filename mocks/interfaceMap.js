@@ -1,5 +1,5 @@
 
-const path = 'mock'
+const path = '/mock'
 
 // region
 const base = require('./apis/base') // 基础的接口

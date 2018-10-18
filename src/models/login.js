@@ -1,26 +1,31 @@
 import { loginApi } from '@services/common'
+import { routerRedux } from 'dva/router'
 
 export default {
-  namespace: "login",
-  state: [],
-  reducers: {
-    'login'(state, { data: id }) {
-      return state.filter(item => item.id !== id);
-    }
-  },
-  effects: {
-    *checkLogin(action, { put, call }) {
-      const users = yield call(loginApi, action.data);
-      yield put({ type: "login", data: users });
-    }
-  },
-  subscriptions: {
-    /* setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === "/user") {
-          dispatch({ type: "fetch" });
+    namespace: 'login',
+    state: {
+        isLogin: false
+    },
+    reducers: {
+        login(state, { data }) {
+            return { ...state, isLogin: data.success }
         }
-      });
-    } */
-  }
-};
+    },
+    effects: {
+        *checkLogin({ payload }, { put, call, select }) {
+            const isLogin = yield select(state=>state.login.isLogin)
+            if (!isLogin && !payload) {
+                yield put(routerRedux.push('/login'))
+            } else {
+                const data = yield call(loginApi, payload)
+                if (data.status === 1) {
+                    yield put(routerRedux.push('/'))
+                }
+                yield put({ type: 'login', data: data })
+            }
+        }
+    },
+    subscriptions: {
+      
+    }
+}
