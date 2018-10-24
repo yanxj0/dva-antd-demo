@@ -5,9 +5,12 @@ let checkLogin = false;
 export default {
     namespace: 'app',
     state: {
-        
+        menusCollapsed: false,
     },
     reducers: {
+        toggleMenus(state, payload){
+            return { ...state, menusCollapsed: !state.menusCollapsed }
+        }
     },
     effects: {
         

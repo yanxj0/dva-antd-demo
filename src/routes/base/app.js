@@ -16,7 +16,10 @@ const App = (props) => {
         <Layout style={{paddingTop:'64px'}}>
           <Sider width={200} 
             style={{ background: '#fff' }}
-            className="fixed">
+            className="fixed"
+            trigger={null}
+            collapsible
+            collapsed={props.app.menusCollapsed}>
             <SiderMenus {...props}/>
           </Sider>
           <Layout className="content-max">
