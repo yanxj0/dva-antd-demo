@@ -1,7 +1,7 @@
 import dva from 'dva'
+import './index.less'
 import createLoading from 'dva-loading'
 import { createHashHistory } from 'history'
-import './index.css'
 
 import router from '@configs/router.config'
 

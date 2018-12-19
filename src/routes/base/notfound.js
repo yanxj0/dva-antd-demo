@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, hashHistory } from 'dva/router'
+import { Link } from 'dva/router'
 import { Progress, Button } from 'antd'
 
 // 声明组件  并对外输出
@@ -13,6 +13,7 @@ export default class notfound extends Component {
   }
 
   render() {
+    let history = this.props.history;
     return (
       <div className="developing notfound">
         <Progress
@@ -26,7 +27,7 @@ export default class notfound extends Component {
         <div className="link ptbig">
           <p className="mbbig"><Link to="/">跳转至首页</Link></p>
           <p className="mbbig"><Link to="/login">跳转至登陆页</Link></p>
-          <Button type="primary" onClick={() => hashHistory.goBack()}>返回上一页</Button>
+          <Button type="primary" onClick={() => history.goBack()}>返回上一页</Button>
         </div>
       </div>
     )

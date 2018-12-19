@@ -7,18 +7,8 @@ const { SubMenu } = Menu
 const menus = []
 
 const RootSider = ({ match, app, dispatch }) => {
-    function toggle() {
-        dispatch({type:'app/toggleMenus'})
-    }
     return (
-        <div>
-            <Button
-                type="primary"
-                onClick={toggle}
-                style={{ marginBottom: 16 }}
-            >
-                <Icon type={app.menusCollapsed ? 'menu-unfold' : 'menu-fold'} />
-            </Button>
+        <div style={{ height: '100%'}}>
             <Menu
                 mode="inline"
                 theme="dark"

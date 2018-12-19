@@ -7,32 +7,45 @@ import Header from './app/header'
 import RouterBar from './app/routerBar'
 import SiderMenus from './app/siderMenus'
 
-const { Footer, Content, Sider} = Layout;
+const { Footer, Content, Sider } = Layout
 
-const App = (props) => {
+const App = props => {
+	function onCollapse(){
+		props.dispatch({type:'app/toggleMenus'})
+	}
+
     return (
-        <Layout style={{ minHeight: '100vh'}}>
-        <Header />
-        <Layout style={{paddingTop:'64px'}}>
-          <Sider width={200} 
-            style={{ background: '#fff' }}
-            className="fixed"
-            trigger={null}
-            collapsible
-            collapsed={props.app.menusCollapsed}>
-            <SiderMenus {...props}/>
-          </Sider>
-          <Layout className="content-max">
-            <RouterBar {...props}/>
-            <Content style={{ background: '#fff', padding: 12, margin: 0, minHeight: 280 }}>
-              {/* <ContentRoute {...this.props}/> */}
-            </Content>
-            <Footer style={{ textAlign: 'center' }}>
-              <a href="https://ant.design">Ant Design</a>
-            </Footer>
-          </Layout>
+        <Layout style={{ minHeight: '100vh' }}>
+            <Header />
+            <Layout style={{ paddingTop: '64px' }}>
+                <Sider
+                    width={200}
+                    style={{ background: '#fff' }}
+                    className="fixed"
+                    collapsible
+					collapsed={props.app.menusCollapsed}
+					onCollapse={onCollapse}
+                >
+                    <SiderMenus {...props} />
+                </Sider>
+                <Layout className="content-max">
+                    <RouterBar {...props} />
+                    <Content
+                        style={{
+                            background: '#fff',
+                            padding: 12,
+                            margin: 0,
+                            minHeight: 280
+                        }}
+                    >
+                        {/* <ContentRoute {...this.props}/> */}
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>
+                        <a href="https://ant.design">Ant Design</a>
+                    </Footer>
+                </Layout>
+            </Layout>
         </Layout>
-      </Layout>
     )
 }
 
@@ -40,6 +53,6 @@ App.propTypes = {
     data: PropTypes.object
 }
 
-export default connect(({  app }) => ({
-    app,
+export default connect(({ app }) => ({
+    app
 }))(App)

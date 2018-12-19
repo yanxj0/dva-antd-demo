@@ -1,4 +1,4 @@
-
+import './index.less'
 import login from './login'
 import notfound from './notfound'
 import app from './app'

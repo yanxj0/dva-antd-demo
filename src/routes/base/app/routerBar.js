@@ -6,7 +6,7 @@ const RooterBar = ({ match }) => {
     const urlArr = match.url.split('/')
     const home = '首页'
     return (
-        <Breadcrumb style={{ margin: '12px 0' }}>
+        <Breadcrumb style={{ margin: '12px' }}>
             {urlArr[0] === urlArr[1] && (
                 <Breadcrumb.Item>{home}</Breadcrumb.Item>
             )}
