@@ -19,7 +19,7 @@ export default {
             } else {
                 const data = yield call(loginApi, payload)
                 if (data.status === 1) {
-                    yield put(routerRedux.push('/'))
+                    yield put(routerRedux.push('/home'))
                 }
                 yield put({ type: 'login', data: data })
             }

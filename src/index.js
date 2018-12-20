@@ -3,7 +3,7 @@ import './index.less'
 import createLoading from 'dva-loading'
 import { createHashHistory } from 'history'
 
-import router from '@configs/router.config'
+import router from './router'
 
 // 1. Initialize
 const app = dva({

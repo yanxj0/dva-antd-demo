@@ -1,6 +1,6 @@
 import './index.less'
 import login from './login'
 import notfound from './notfound'
-import app from './app'
+import App from './app'
 
-export { login, notfound, app }
+export { login, notfound, App }
