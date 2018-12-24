@@ -1,11 +1,13 @@
-import { routerRedux } from 'dva/router'
+import { routerRedux } from 'dva/router';
+import { menus } from '@configs/router.config';
 
 let checkLogin = false;
 
 export default {
     namespace: 'app',
     state: {
-        menusCollapsed: true,
+        menusCollapsed: false,
+        menus: menus,
         locationPath: null,
     },
     reducers: {
