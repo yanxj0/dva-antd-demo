@@ -18,10 +18,17 @@ const App = ({ dispatch, children, app }) => {
     const byId = app.menus.byId
     let loginPath = null,
         isLoginPage = null,
-        menusProps = null
+        menusProps = null,
+        barProps = null,
+        curMenu = null
     //404
     const found = [...byId.values()].some(
-        item => item.path === app.locationPath
+        item => {
+            if(item.path === app.locationPath){
+                curMenu = item;
+                return true;
+            }
+        }
     )
 
     if (found) {
@@ -30,6 +37,11 @@ const App = ({ dispatch, children, app }) => {
     }
 
     if (!isLoginPage) {
+        barProps = {
+            curMenu,
+            dispatch,
+            app
+        }
         menusProps = {
             dispatch,
             app
@@ -56,7 +68,7 @@ const App = ({ dispatch, children, app }) => {
                                 <SiderMenus {...menusProps} />
                             </Sider>
                             <Layout className="content-max">
-                                <RouterBar />
+                                <RouterBar {...barProps}/>
                                 <Content
                                     style={{
                                         background: '#fff',

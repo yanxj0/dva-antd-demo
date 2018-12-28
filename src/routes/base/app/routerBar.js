@@ -2,20 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Breadcrumb } from 'antd'
 
-const RooterBar = (router) => {
-    // const urlArr = match.url.split('/')
-    // const home = '首页'
-    return (<div></div>
-                // <Breadcrumb style={{ margin: '12px' }}>
-        //     {urlArr[0] === urlArr[1] && (
-        //         <Breadcrumb.Item>{home}</Breadcrumb.Item>
-        //     )}
-        // </Breadcrumb>
+const RouterBar = ({ curMenu, dispatch, app }) => {
+    const byId = app.menus.byId
+    const urlArr = curMenu.path.split('/')
+    const routers = urlArr.reduce((prv, item) => {
+        if (item !== '') {
+            prv.push(byId.get(item))
+        }
+        return prv
+    }, [])
+    return (
+        <Breadcrumb className="routerbar" separator=">">
+            {routers.map(item => {
+                return (
+                    <Breadcrumb.Item href={`#${item.path}`} key={item.id}>
+                        {item.name}
+                    </Breadcrumb.Item>
+                )
+            })}
+        </Breadcrumb>
     )
 }
 
-RooterBar.propTypes = {
+RouterBar.propTypes = {
     // match: PropTypes.object
 }
 
-export default RooterBar
+export default RouterBar

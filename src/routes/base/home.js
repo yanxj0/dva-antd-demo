@@ -6,7 +6,7 @@ class Home extends Component {
     render() {
         return (
             <Row>
-                <Col className='home-page'>哦，来了！</Col>
+                <Col className='home-page'>首页，来了！</Col>
             </Row>
         )
     }

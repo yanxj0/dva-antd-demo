@@ -30,7 +30,7 @@ const RootSider = ({ app, dispatch }) => {
     }
 
     return (
-        <div className='menus'>
+        <div className="menus">
            <Menu
            theme="dark"
            defaultSelectedKeys={[curId.id]}
