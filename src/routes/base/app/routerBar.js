@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Breadcrumb } from 'antd'
 
-const RouterBar = ({ curMenu, dispatch, app }) => {
-    const byId = app.menus.byId
+const RouterBar = ({ curMenu, dispatch, menus }) => {
+    const byId = menus.byId
     const urlArr = curMenu.path.split('/')
     const routers = urlArr.reduce((prv, item) => {
         if (item !== '') {

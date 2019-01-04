@@ -10,12 +10,12 @@ import SiderMenus from './siderMenus'
 
 const { Footer, Content, Sider } = Layout
 
-const App = ({ dispatch, children, app }) => {
+const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
     function onCollapse() {
         dispatch({ type: 'app/toggleMenus' })
     }
 
-    const byId = app.menus.byId
+    const byId = menus.byId
     let loginPath = null,
         isLoginPage = null,
         menusProps = null,
@@ -24,7 +24,7 @@ const App = ({ dispatch, children, app }) => {
     //404
     const found = [...byId.values()].some(
         item => {
-            if(item.path === app.locationPath){
+            if(item.path === path){
                 curMenu = item;
                 return true;
             }
@@ -33,18 +33,20 @@ const App = ({ dispatch, children, app }) => {
 
     if (found) {
         loginPath = byId.get('login').path
-        isLoginPage = !!pathToRegexp(loginPath).exec(app.locationPath)
+        isLoginPage = !!pathToRegexp(loginPath).exec(path)
     }
 
     if (!isLoginPage) {
         barProps = {
             curMenu,
             dispatch,
-            app
+            menus,
+            path
         }
         menusProps = {
             dispatch,
-            app
+            menus,
+            path
         }
     }
 
@@ -62,7 +64,7 @@ const App = ({ dispatch, children, app }) => {
                                 style={{ background: '#fff' }}
                                 className="fixed"
                                 collapsible
-                                collapsed={app.menusCollapsed}
+                                collapsed={menusCollapsed}
                                 onCollapse={onCollapse}
                             >
                                 <SiderMenus {...menusProps} />
@@ -98,5 +100,7 @@ App.propTypes = {
 }
 
 export default connect(({ app }) => ({
-    app
+    menus: app.menus,
+    path: app.locationPath,
+    menusCollapsed: app.menusCollapsed
 }))(App)

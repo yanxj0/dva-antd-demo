@@ -6,12 +6,12 @@ import pathToRegexp from 'path-to-regexp'
 
 const { SubMenu } = Menu
 
-const RootSider = ({ app, dispatch }) => {
+const RootSider = ({ menus, path, dispatch }) => {
 
-    const byId = app.menus.byId;
-    const byPid = app.menus.byPid;
-    const curId = [...byId.values()].filter(item => pathToRegexp(`${item.path}`).exec(app.locationPath))[0];
-    const curMenus = [...byId.values()].filter(item => pathToRegexp(`${item.path}/:path*`).exec(app.locationPath));
+    const byId = menus.byId;
+    const byPid = menus.byPid;
+    const curId = [...byId.values()].filter(item => pathToRegexp(`${item.path}`).exec(path))[0];
+    const curMenus = [...byId.values()].filter(item => pathToRegexp(`${item.path}/:path*`).exec(path));
 
     function caleMenus(item) {
         if (item.display && item.display === 'block') {

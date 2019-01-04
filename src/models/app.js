@@ -1,6 +1,5 @@
 import { routerRedux } from 'dva/router'
-// import { menus } from '@configs/router.config'
-import { menus } from '@services/common'
+import { menus } from '@configs/router.config'
 
 let checkLogin = false
 
@@ -8,7 +7,7 @@ export default {
     namespace: 'app',
     state: {
         menusCollapsed: false,
-        menus: null,
+        menus: menus,
         locationPath: null
     },
     reducers: {
@@ -23,12 +22,6 @@ export default {
         *updateLocation({ payload }, { put, select }) {
             yield put({ type: 'updateStore', payload })
         },
-        *getMenus({ payload }, {put, call}) {
-            const data = yield call(menus, payload) 
-            if(data.status === 1){
-                yield put({type: 'updateStore'}, )
-            }
-        }
     },
     subscriptions: {
         setup({ dispatch, history }) {

@@ -9,11 +9,41 @@ export const routers = [
         component: () => import('../routes/base/home')
     },
     {
+        id: 'film',
+        pid: '0',
+        name: '电影',
+        icon:'file-jpg',
+        path: '/film',
+        display: 'block',
+        component: ''
+    },
+    {
+        id: 'europeAmerica',
+        pid: 'film',
+        name: '欧美电影',
+        icon:'file-jpg',
+        path: '/film/europeAmerica',
+        display: 'block',
+        models: () => [import('../models/film')],
+        component: () => import('../routes/film/europeAmerica')
+    },
+    {
+        id: 'hongkong',
+        pid: 'film',
+        name: '香港电影',
+        icon:'file-jpg',
+        path: '/film/hongkong',
+        display: 'block',
+        models: () => [import('../models/film')],
+        component: () => import('../routes/film/hongkong')
+    },
+    {
         id: 'login',
         pid: '0',
         name: '登陆',
         icon:'file-jpg',
         path: '/login',
+        models: () => [import('../models/login')],
         component: () => import('../routes/base/login')
     },
     {
