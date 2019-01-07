@@ -32,5 +32,6 @@ export default function Routers({ history, app }) {
 }
 
 Routers.ProTypes = {
-    history: ProTypes.object
+    history: ProTypes.object,
+    app: ProTypes.object
 }

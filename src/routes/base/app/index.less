@@ -1,10 +1,55 @@
-.base-app{ 
+.base-app {
     min-height: 100%;
-    .menus{
-        height: 100%;
-        background: #001529;
+    .header.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        .logo {
+            width: 120px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 16px 28px 16px 0;
+            float: left;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+        }
+        .menu {
+            width: 100%;
+        }
+        .poweroff{
+            font-size: 1.6rem;
+        }
+        .poweroff:hover{
+            color: #1890ff;
+        }
     }
-    .routerbar{
-        margin: 12px;
+    .main{
+        padding-top: 64px;
+        .menus {
+            height: 100%;
+            background: #001529;
+        }
+        .content-max{
+            .routerbar {
+                margin: 12px;
+            }
+            .content{
+                background: #fff;
+                padding: 12px;
+                margin: 0 15px;
+                min-height: 280px;
+            }
+        }
+        .footer{
+            text-align: center;
+            padding: 13px 50px;
+        }
     }
+
 }

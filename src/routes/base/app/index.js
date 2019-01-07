@@ -10,9 +10,30 @@ import SiderMenus from './siderMenus'
 
 const { Footer, Content, Sider } = Layout
 
-const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
+const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
     function onCollapse() {
-        dispatch({ type: 'app/toggleMenus' })
+        dispatch({
+            type: 'app/toggleMenus',
+            payload: {
+                menusCollapsed: !menusCollapsed
+            }
+        })
+    }
+    function logout() {
+        dispatch({
+            type: 'app/logout'
+        })
+    }
+
+    if (!token && path !== '/login') {
+        logout()
+    } else if (token && path === '/login') {
+        dispatch({
+            type: 'app/loginOK',
+            payload: {
+                token: token
+            }
+        })
     }
 
     const byId = menus.byId
@@ -22,21 +43,19 @@ const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
         barProps = null,
         curMenu = null
     //404
-    const found = [...byId.values()].some(
-        item => {
-            if(item.path === path){
-                curMenu = item;
-                return true;
-            }
+    const found = [...byId.values()].some(item => {
+        if (item.path === path) {
+            curMenu = item
+            return true
         }
-    )
+    })
 
     if (found) {
         loginPath = byId.get('login').path
         isLoginPage = !!pathToRegexp(loginPath).exec(path)
     }
 
-    if (!isLoginPage) {
+    if (found && !isLoginPage) {
         barProps = {
             curMenu,
             dispatch,
@@ -57,11 +76,10 @@ const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
                     children
                 ) : (
                     <Layout className="base-app">
-                        <Header />
-                        <Layout style={{ paddingTop: '64px' }}>
+                        <Header logout={logout} />
+                        <Layout className="main">
                             <Sider
                                 width={200}
-                                style={{ background: '#fff' }}
                                 className="fixed"
                                 collapsible
                                 collapsed={menusCollapsed}
@@ -70,18 +88,11 @@ const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
                                 <SiderMenus {...menusProps} />
                             </Sider>
                             <Layout className="content-max">
-                                <RouterBar {...barProps}/>
-                                <Content
-                                    style={{
-                                        background: '#fff',
-                                        padding: 12,
-                                        margin: 0,
-                                        minHeight: 280
-                                    }}
-                                >
+                                <RouterBar {...barProps} />
+                                <Content className="content">
                                     {children}
                                 </Content>
-                                <Footer style={{ textAlign: 'center' }}>
+                                <Footer className="footer">
                                     <a href="https://ant.design">Ant Design</a>
                                 </Footer>
                             </Layout>
@@ -96,10 +107,14 @@ const App = ({ dispatch, children, menus, path, menusCollapsed }) => {
 }
 
 App.propTypes = {
-    data: PropTypes.object
+    menus: PropTypes.object,
+    token: PropTypes.string,
+    path: PropTypes.string,
+    menusCollapsed: PropTypes.bool
 }
 
 export default connect(({ app }) => ({
+    token: app.token,
     menus: app.menus,
     path: app.locationPath,
     menusCollapsed: app.menusCollapsed

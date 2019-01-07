@@ -1,36 +1,41 @@
 import { routerRedux } from 'dva/router'
 import { menus } from '@configs/router.config'
 
-let checkLogin = false
-
 export default {
     namespace: 'app',
     state: {
         menusCollapsed: false,
         menus: menus,
+        token: null,
         locationPath: null
     },
     reducers: {
-        toggleMenus(state, payload) {
-            return { ...state, menusCollapsed: !state.menusCollapsed }
-        },
         updateStore(state, { payload }) {
             return { ...state, ...payload }
         }
     },
     effects: {
-        *updateLocation({ payload }, { put, select }) {
+        * updateLocation({ payload }, { put, select }) {
             yield put({ type: 'updateStore', payload })
+        },
+        * updateToken({ payload }, { put, select }) {
+            yield put({ type: 'updateStore', payload})
+        },
+        * toggleMenus({ payload }, { put, select }) {
+            yield put({ type: 'updateStore', payload})
+        },
+        * logout({ payload }, { put, select }) {
+            window.sessionStorage.removeItem('token');
+            yield put(routerRedux.push('/login'))
+        },
+        * loginOK({ payload }, { put, select }) {
+            window.sessionStorage.setItem('token',payload.token);
+            yield put(routerRedux.push('/home'))
         },
     },
     subscriptions: {
         setup({ dispatch, history }) {
-            history.listen(({ pathname }) => {
-                if (pathname === '/' && !checkLogin) {
-                    checkLogin = true
-                    dispatch({ type: 'login/checkLogin' })
-                }
-            })
+
         },
         setupHistory({ dispatch, history }) {
             history.listen(location => {
@@ -39,6 +44,12 @@ export default {
                     payload: {
                         locationPath: location.pathname
                     }
+                });
+                dispatch({
+                    type: 'updateToken',
+                    payload: {
+                      token: window.sessionStorage.getItem('token')
+                    },
                 })
             })
         }

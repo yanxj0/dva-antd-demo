@@ -25,7 +25,7 @@ export default class notfound extends Component {
         />
 
         <div className="link ptbig">
-          <p className="mbbig"><Link to="/">跳转至首页</Link></p>
+          <p className="mbbig"><Link to="/home">跳转至首页</Link></p>
           <p className="mbbig"><Link to="/login">跳转至登陆页</Link></p>
           <Button type="primary" onClick={() => history.goBack()}>返回上一页</Button>
         </div>

@@ -51,7 +51,6 @@ export const routers = [
         pid: '0',
         name: '未找到',
         icon:'file-jpg',
-        path: '*',
         component: () => import('../routes/base/notfound')
     },
 ]

@@ -1,19 +1,21 @@
 import React from 'react'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 
 const { Header } = Layout
 
-const RootHeader = () => (
+const RootHeader = (props) => (
     <Header className="header clearfix fixed">
         <div className="logo">Logo</div>
-        <div className="left-menu" style={{ float: 'left', width: '50%' }}>
+        <div className="menu">
             <Menu
                 theme="dark"
                 mode="horizontal"
                 defaultSelectedKeys={[]}
-                style={{ lineHeight: '64px' }}
             >
             </Menu>
+        </div>
+        <div className="poweroff">
+            <Icon type="poweroff" onClick={props.logout}/>
         </div>
     </Header>
 )
