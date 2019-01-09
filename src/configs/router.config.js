@@ -38,6 +38,25 @@ export const routers = [
         component: () => import('../routes/film/hongkong')
     },
     {
+        id: 'table',
+        pid: '0',
+        name: '表格',
+        icon:'file-jpg',
+        path: '/table',
+        display: 'block',
+        component: ''
+    },
+    {
+        id: 'starsTable',
+        pid: 'table',
+        name: 'stars表格',
+        icon:'file-jpg',
+        path: '/table/starsTable',
+        display: 'block',
+        models: () => [import('../models/table')],
+        component: () => import('../routes/table/starsTable')
+    },
+    {
         id: 'login',
         pid: '0',
         name: '登陆',

@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
-import { Row, Col } from 'antd'
+import {
+    Row,
+    Col,
+    Card,
+    Menu,
+    Dropdown,
+    Button,
+    Icon,
+    message,
+    Spin
+} from 'antd'
 import echarts from 'echarts'
 import { getJS } from '@services/githubApi'
 
@@ -8,16 +18,31 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            list: ['javascript', 'java', 'c', 'c++'],
             chart: null,
             series: [],
-            yData: []
+            yData: [],
+            curLabel: 'javascript',
+            loading: false
         }
+        this.getFormApi.bind(this)
         this.showChart.bind(this)
+        this.changeHandler.bind(this)
     }
 
     componentWillMount() {
+        this.getFormApi(this.state.curLabel)
+    }
+    componentDidMount() {
+        let dom = document.querySelector('#homePage')
+        this.setState({ chart: echarts.init(dom) }, () => {
+            this.state.series.length && this.showChart()
+        })
+    }
+    getFormApi = language => {
+        this.setState({ loading: true })
         getJS({
-            q: 'language:javascript',
+            q: `language:${language}`,
             sort: 'stars'
         }).then(({ data: { items } }) => {
             let yData = []
@@ -36,11 +61,9 @@ class Home extends Component {
                 ]
             )
 
-            this.setState({
-                series,
-                yData
+            this.setState({ series, yData }, () => {
+                this.state.chart && this.showChart()
             })
-            this.showChart()
         })
     }
     showChart = () => {
@@ -71,14 +94,43 @@ class Home extends Component {
             series: this.state.series
         }
         this.state.chart.setOption(option, true)
+        this.setState({ loading: false })
     }
-    componentDidMount() {
-        let dom = document.querySelector('#homePage')
-        this.setState({ chart: echarts.init(dom) })
+    changeHandler = evt => {
+        const curLabel = evt.key
+        this.setState({ curLabel })
+        this.getFormApi(curLabel)
     }
 
     render() {
-        return <div id="homePage" className="home-page" />
+        const menu = (
+            <Menu onClick={this.changeHandler}>
+                {this.state.list.map(item => (
+                    <Menu.Item key={item}>{item}</Menu.Item>
+                ))}
+            </Menu>
+        )
+        return (
+            <div className="home-page">
+                <Row gutter={10} className="row">
+                    <Col md={24} className="col">
+                        <Card className="card"
+                            title={
+                                <Dropdown overlay={menu} className="dropdown">
+                                    <Button>
+                                        <Spin spinning={this.state.loading} />
+                                        {this.state.curLabel}
+                                        <Icon type="down" />
+                                    </Button>
+                                </Dropdown>
+                            }
+                        >
+                            <div id="homePage" className="chart-container" />
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
+        )
     }
 }
 
