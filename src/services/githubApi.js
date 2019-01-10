@@ -7,3 +7,9 @@ export const getJS = params =>
         data: { params },
         url: `${apiUrl}/search/repositories`
     })
+
+export const getSomeBodyStars = (somebody, params) => 
+    request({
+        data: { params },
+        url: `${apiUrl}/users/${somebody}/starred`
+    })

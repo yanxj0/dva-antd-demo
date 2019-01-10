@@ -55,14 +55,15 @@ export function request (options) {
         console.log('axios call back')
         console.log(response);
         // 对请求返回结果进行解析
-        let { status, data }  = response;
+        let { status, data, headers }  = response;
         if (status === 200) {
             // 请求成功，且正确返回数据，直接返回需要的结果
             return Promise.resolve({
                 status: 1,
                 success: true,
                 message: data.message,
-                data: data
+                data: data,
+                headers: headers
             });
         } else {
             // 请求成功，但是返回数据有情况

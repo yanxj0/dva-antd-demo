@@ -41,7 +41,8 @@ const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
         isLoginPage = null,
         menusProps = null,
         barProps = null,
-        curMenu = null
+        curMenu = null,
+        showOrHide = ''
     //404
     const found = [...byId.values()].some(item => {
         if (item.path === path) {
@@ -67,6 +68,7 @@ const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
             menus,
             path
         }
+        showOrHide = menusCollapsed ? ' hide' : ''
     }
 
     return (
@@ -80,14 +82,14 @@ const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
                         <Layout className="main">
                             <Sider
                                 width={200}
-                                className="fixed"
+                                className="fixed silder"
                                 collapsible
                                 collapsed={menusCollapsed}
                                 onCollapse={onCollapse}
                             >
                                 <SiderMenus {...menusProps} />
                             </Sider>
-                            <Layout className="content-max">
+                            <Layout className={`content-max${showOrHide}`}>
                                 <RouterBar {...barProps} />
                                 <Content className="content">
                                     {children}

@@ -18,7 +18,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: ['javascript', 'java', 'c', 'c++'],
+            list: ['javascript', 'java', 'c', 'c++', 'python'],
             chart: null,
             series: [],
             yData: [],
@@ -112,23 +112,22 @@ class Home extends Component {
         )
         return (
             <div className="home-page">
-                <Row gutter={10} className="row">
-                    <Col md={24} className="col">
-                        <Card className="card"
-                            title={
-                                <Dropdown overlay={menu} className="dropdown">
-                                    <Button>
-                                        <Spin spinning={this.state.loading} />
-                                        {this.state.curLabel}
-                                        <Icon type="down" />
-                                    </Button>
-                                </Dropdown>
-                            }
-                        >
-                            <div id="homePage" className="chart-container" />
-                        </Card>
-                    </Col>
-                </Row>
+                <Card
+                    title={
+                        <React.Fragment>
+                            {`GitHub ${this.state.curLabel}语言 前30开源项目`}
+                            <Dropdown overlay={menu} className="dropdown">
+                                <Button>
+                                    {this.state.curLabel}
+                                    <Icon type="down" />
+                                </Button>
+                            </Dropdown>
+                            <Spin spinning={this.state.loading} />
+                        </React.Fragment>
+                    }
+                >
+                    <div id="homePage" className="chart-container" />
+                </Card>
             </div>
         )
     }
