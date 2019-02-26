@@ -1,10 +1,19 @@
 export const routers = [
     {
+        id: 'base',
+        pid: '-1',
+        name: '布局',
+        icon:'file-jpg',
+        path: '/base',
+        display: 'block',
+        component: () => import('../routes/base/app')
+    },
+    {
         id: 'home',
         pid: '0',
         name: '首页',
         icon:'file-jpg',
-        path: '/home',
+        path: '/base/home',
         display: 'block',
         component: () => import('../routes/base/home')
     },
@@ -13,7 +22,7 @@ export const routers = [
         pid: '0',
         name: '电影',
         icon:'file-jpg',
-        path: '/film',
+        path: '/base/film',
         display: 'block',
         component: ''
     },
@@ -22,7 +31,7 @@ export const routers = [
         pid: 'film',
         name: '欧美电影',
         icon:'file-jpg',
-        path: '/film/europeAmerica',
+        path: '/base/film/europeAmerica',
         display: 'block',
         models: () => [import('../models/film')],
         component: () => import('../routes/film/europeAmerica')
@@ -32,7 +41,7 @@ export const routers = [
         pid: 'film',
         name: '香港电影',
         icon:'file-jpg',
-        path: '/film/hongkong',
+        path: '/base/film/hongkong',
         display: 'block',
         models: () => [import('../models/film')],
         component: () => import('../routes/film/hongkong')
@@ -42,7 +51,7 @@ export const routers = [
         pid: '0',
         name: '表格',
         icon:'file-jpg',
-        path: '/table',
+        path: '/base/table',
         display: 'block',
         component: ''
     },
@@ -51,14 +60,14 @@ export const routers = [
         pid: 'table',
         name: 'stars表格',
         icon:'file-jpg',
-        path: '/table/starsTable',
+        path: '/base/table/starsTable',
         display: 'block',
         models: () => [import('../models/table')],
         component: () => import('../routes/table/starsTable')
     },
     {
         id: 'login',
-        pid: '0',
+        pid: '-1',
         name: '登陆',
         icon:'file-jpg',
         path: '/login',
@@ -67,8 +76,9 @@ export const routers = [
     },
     {
         id: 'notfound',
-        pid: '0',
+        pid: '-1',
         name: '未找到',
+        path:'*',
         icon:'file-jpg',
         component: () => import('../routes/base/notfound')
     },

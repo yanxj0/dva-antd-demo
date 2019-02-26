@@ -7,10 +7,13 @@ import './index.less'
 import Header from './header'
 import RouterBar from './routerBar'
 import SiderMenus from './siderMenus'
+import { routers } from '@configs/router.config'
+import { Route, Switch } from 'dva/router'
+import dynamic from 'dva/dynamic'
 
 const { Footer, Content, Sider } = Layout
 
-const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
+const AppBase = ({ root, dispatch, menus, path, menusCollapsed }) => {
     function onCollapse() {
         dispatch({
             type: 'app/toggleMenus',
@@ -22,17 +25,6 @@ const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
     function logout() {
         dispatch({
             type: 'app/logout'
-        })
-    }
-
-    if (!token && path !== '/login') {
-        logout()
-    } else if (token && path === '/login') {
-        dispatch({
-            type: 'app/loginOK',
-            payload: {
-                token: token
-            }
         })
     }
 
@@ -51,64 +43,73 @@ const App = ({ dispatch, children, token, menus, path, menusCollapsed }) => {
         }
     })
 
-    if (found) {
-        loginPath = byId.get('login').path
-        isLoginPage = !!pathToRegexp(loginPath).exec(path)
-    }
+    loginPath = byId.get('login').path
+    isLoginPage = !!pathToRegexp(loginPath).exec(path)
 
-    if (found && !isLoginPage) {
-        barProps = {
-            curMenu,
-            dispatch,
-            menus,
-            path
-        }
-        menusProps = {
-            dispatch,
-            menus,
-            path
-        }
-        showOrHide = menusCollapsed ? ' hide' : ''
+    barProps = {
+        curMenu,
+        dispatch,
+        menus,
+        path
     }
+    menusProps = {
+        dispatch,
+        menus,
+        path
+    }
+    showOrHide = menusCollapsed ? ' hide' : ''
 
     return (
         <React.Fragment>
-            {found ? (
-                isLoginPage ? (
-                    children
-                ) : (
-                    <Layout className="base-app">
-                        <Header logout={logout} />
-                        <Layout className="main">
-                            <Sider
-                                width={200}
-                                className="fixed silder"
-                                collapsible
-                                collapsed={menusCollapsed}
-                                onCollapse={onCollapse}
-                            >
-                                <SiderMenus {...menusProps} />
-                            </Sider>
-                            <Layout className={`content-max${showOrHide}`}>
-                                <RouterBar {...barProps} />
-                                <Content className="content">
-                                    {children}
-                                </Content>
-                                <Footer className="footer">
-                                    <a href="https://ant.design">Ant Design</a>
-                                </Footer>
-                            </Layout>
-                        </Layout>
+            <Layout className="base-app">
+                <Header logout={logout} />
+                <Layout className="main">
+                    <Sider
+                        width={200}
+                        className="fixed silder"
+                        collapsible
+                        collapsed={menusCollapsed}
+                        onCollapse={onCollapse}
+                    >
+                        <SiderMenus {...menusProps} />
+                    </Sider>
+                    <Layout className={`content-max${showOrHide}`}>
+                        <RouterBar {...barProps} />
+                        <Content className="content">
+                            <Switch>
+                                {routers.reduce(
+                                    (prev, { path, ...dynamics }) => {
+                                        if(dynamics.pid !== '-1'){
+                                            dynamics.app = root;
+                                            prev.push(
+                                                <Route
+                                                    exact
+                                                    key={path}
+                                                    path={path}
+                                                    component={dynamic({
+                                                        root,
+                                                        ...dynamics
+                                                    })}
+                                                />)
+                                            }
+                                        return prev
+                                    },
+                                    []
+                                )}
+                            </Switch>
+                        </Content>
+                        <Footer className="footer">
+                            <a href="https://ant.design">Ant Design</a>
+                        </Footer>
                     </Layout>
-                )
-            ) : (
-                children
-            )}
+                </Layout>
+            </Layout>
         </React.Fragment>
     )
 }
 
-App.propTypes = {
+AppBase.propTypes = {
+    root: PropTypes.object,
     menus: PropTypes.object,
     token: PropTypes.string,
     path: PropTypes.string,
@@ -116,8 +117,9 @@ App.propTypes = {
 }
 
 export default connect(({ app }) => ({
+    root: app.root,
     token: app.token,
     menus: app.menus,
     path: app.locationPath,
     menusCollapsed: app.menusCollapsed
-}))(App)
+}))(AppBase)

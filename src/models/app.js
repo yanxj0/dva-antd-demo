@@ -4,6 +4,7 @@ import { menus } from '@configs/router.config'
 export default {
     namespace: 'app',
     state: {
+        root: null,
         menusCollapsed: false,
         menus: menus,
         token: null,
@@ -15,6 +16,9 @@ export default {
         }
     },
     effects: {
+        * setRootInstance({ payload }, {put}){
+            yield put({ type: 'updateStore', payload })
+        },
         * updateLocation({ payload }, { put, select }) {
             yield put({ type: 'updateStore', payload })
         },
@@ -30,7 +34,7 @@ export default {
         },
         * loginOK({ payload }, { put, select }) {
             window.sessionStorage.setItem('token',payload.token);
-            yield put(routerRedux.push('/home'))
+            yield put(routerRedux.push('/base'))
         },
     },
     subscriptions: {

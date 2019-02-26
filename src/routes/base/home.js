@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'dva'
 import {
-    Row,
-    Col,
     Card,
-    Menu,
-    Dropdown,
-    Button,
-    Icon,
-    message,
-    Spin
+    Select
 } from 'antd'
 import echarts from 'echarts'
 import { getJS } from '@services/githubApi'
+
+const Option = Select.Option;
 
 class Home extends Component {
     constructor(props) {
@@ -96,33 +91,28 @@ class Home extends Component {
         this.state.chart.setOption(option, true)
         this.setState({ loading: false })
     }
-    changeHandler = evt => {
-        const curLabel = evt.key
-        this.setState({ curLabel })
-        this.getFormApi(curLabel)
+    changeHandler = label => {
+        this.setState({ label })
+        this.getFormApi(label)
     }
 
     render() {
-        const menu = (
-            <Menu onClick={this.changeHandler}>
-                {this.state.list.map(item => (
-                    <Menu.Item key={item}>{item}</Menu.Item>
-                ))}
-            </Menu>
-        )
         return (
             <div className="home-page">
                 <Card
                     title={
                         <React.Fragment>
                             {`GitHub ${this.state.curLabel}语言 前30开源项目`}
-                            <Dropdown overlay={menu} className="dropdown">
-                                <Button>
-                                    {this.state.curLabel}
-                                    <Icon type="down" />
-                                </Button>
-                            </Dropdown>
-                            <Spin spinning={this.state.loading} />
+                            <Select
+                                style={{ width: 120 }}
+                                defaultValue={this.state.curLabel}
+                                loading={this.state.loading}
+                                onChange={this.changeHandler}
+                            >
+                                {this.state.list.map(item => (
+                                    <Option key={item}>{item}</Option>
+                                ))}
+                            </Select>
                         </React.Fragment>
                     }
                 >
