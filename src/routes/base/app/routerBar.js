@@ -6,7 +6,7 @@ const RouterBar = ({ curMenu, dispatch, menus }) => {
     const byId = menus.byId
     const urlArr = curMenu.path.split('/')
     const routers = urlArr.reduce((prv, item) => {
-        if (item !== '') {
+        if (item !== '' && item!=='base') {
             prv.push(byId.get(item))
         }
         return prv
@@ -25,7 +25,7 @@ const RouterBar = ({ curMenu, dispatch, menus }) => {
 }
 
 RouterBar.propTypes = {
-    // match: PropTypes.object
+    menus: PropTypes.object
 }
 
 export default RouterBar

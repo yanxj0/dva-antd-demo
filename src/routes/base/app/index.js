@@ -87,7 +87,6 @@ const AppBase = ({ root, dispatch, menus, path, menusCollapsed }) => {
                                                     key={path}
                                                     path={path}
                                                     component={dynamic({
-                                                        root,
                                                         ...dynamics
                                                     })}
                                                 />)
